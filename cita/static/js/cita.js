@@ -34,7 +34,7 @@ function crear_mapas(){
 			var mapa = data.results[0];
 			var geometria = mapa.geometry.location;
 			var mapOptions = {
-				zoom: 8,
+				zoom: 16,
 				center: new google.maps.LatLng( geometria.lat, geometria.lng)
 			};
 			map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions);

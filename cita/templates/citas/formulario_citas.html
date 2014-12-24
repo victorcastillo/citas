@@ -22,12 +22,12 @@
 		border-top: 5px solid #090;
 	}
 	label, input, select{
-		display: block;
+		display: inline-block;
 		margin: 5px 0px;
 		font-family: Helvetica;
 		font-size: 12px;
 		color: #666;
-		width: 96%;
+		width: 70%;
 		padding: 2px 2px 2px 10px;
 	}
 	input, select, textarea{
@@ -42,6 +42,22 @@
 		font-family: Helvetica;
 		font-size: 12px;
 	}
+	button.buscar_btn{
+		color: #666;
+		border:0px;
+		width: 18%;
+		padding: 6px;
+		background:url({{STATIC_URL}}img/buscar1.png) no-repeat 5px center!important;
+		text-align: right;
+		font-size: 12px;
+	}
+	button.buscar_btn:hover{
+		color: #090;
+		cursor: pointer;
+		background:url({{STATIC_URL}}img/buscar2.png) no-repeat 5px center!important;
+		text-align: right;
+		font-size: 12px;
+	}
 	.direccion{
 		width: calc(92%/2);
 		display: inline-block;
@@ -49,6 +65,10 @@
 	.direccion label, .direccion input[type=radio]{
 		width: auto;
 		display: inline-block;
+		padding: 0px;
+	}
+	.direccion input[type=radio]{
+		margin-right: 15px;
 	}
 	h1{
 		font-family: helvetica;
@@ -78,12 +98,60 @@
 		color:#090;
 	}
 	.input_chicos{
-		width: calc(87%/3);
+		width: calc(87%/5.5);
 		display: inline-block;
 	}
-	.input_mediano{
-		width: calc(87%/1.4);
+	.input_transporte{
+		width: calc(87%/6.5);
 		display: inline-block;
+	}
+	.input_medianos{
+		width: calc(87%/3.5);
+		display: inline-block;
+	}
+	.input_color{
+		width: calc(87%/2.5);
+	}
+	.bloque p, .direccion p{
+		display: inline-block;
+		margin: 5px 0px;
+		font-family: Helvetica;
+		font-size: 12px;
+		color: #666;
+		width: 25%;
+		padding: 0px;
+	}
+	.p_auto{
+		width: auto !important;
+	}
+	#map-canvas{
+		display: block;
+		height: 500px;
+		width: 89%;
+		margin: 0 auto;
+		border: 1px solid #ddd;
+	}
+	.input_buscador{
+		width: 50%;
+	}
+	input[type="submit"]{
+		background-color: #ac3b3b;
+		border-radius: 5px;
+		height: 30px;
+		width: 20%;
+		box-shadow: 0px 3px 0px 0px #751b1b;
+		border: 0px;
+		color: #fff;
+		margin: 5px auto;
+		display: block;
+		cursor: pointer;
+		font-size: 18px;
+		font-family: Helvetica;
+	}
+	input[type="submit"]:hover{
+		background-color: #52a063;
+		box-shadow: 0px 3px 0px 0px #215e2e;
+
 	}
 	</style>
 	<link rel="stylesheet" href="{{STATIC_URL}}fancybox/source/jquery.fancybox.css">
@@ -96,58 +164,73 @@
 			{%csrf_token%}
 			<div class="bloque">
 				<div>
-					<input value="{{nueva_cita.programa}}" required="required" type="text" placeholder="PROGRAMA" name="programa" class="importantes">
+					<p>PROGRAMA</p>
+					<input value="{{nueva_cita.programa}}" required="required" type="text" name="programa" >
 				</div>
 				<div>
-					<input value="{{nueva_cita.id}}" required="required" type="text" placeholder="#CITA" id="id_cita" name="id_cita" class="importantes">
-					<button onclick="buscar_id_cita()">Buscar</button>
+					<p>#CITA</p>
+					<input value="{{nueva_cita.id}}" required="required" type="text" id="id_cita" name="id_cita" class="input_buscador">
+					<button onclick="buscar_id_cita()" class="buscar_btn">Buscar</button>
 				</div>
 				<div>
-					<input value="{{nueva_cita.id_encuesta}}" required="required" name = "id_encuesta" type="text" placeholder="#ID BASE/ENCUESTA" class="importantes">
+					<p>#ID BASE/ <br>ENCUESTA</p>
+					<input value="{{nueva_cita.id_encuesta}}" required="required" name = "id_encuesta" type="text" class="importantes">
 				</div>
 				<div>
-					<input value="{{nueva_cita.rvt}}"  required="required" type="text" placeholder="RVT" name="rvt" class="importantes">
+					<p>RVT</p>
+					<input value="{{nueva_cita.rvt}}"  required="required" type="text" name="rvt" class="importantes">
 				</div>
 				<div>
-					<input value="{{nueva_cita.asesor}}" required="required" type="text" placeholder="ASESOR" name="asesor" class="importantes">
+					<p>ASESOR</p>
+					<input value="{{nueva_cita.asesor}}" required="required" type="text" name="asesor" class="importantes">
 				</div>
 			</div>
 			<div class="bloque">
 				<div>
-					<input value="{{nueva_cita.tel_casa}}" required="required" type="text" name="tel_casa" placeholder="Teléfono" class="importantes">
+					<p>Teléfono</p>
+					<input value="{{nueva_cita.tel_casa}}" required="required" type="text" name="tel_casa" class="importantes">
 				</div>
 				<div>
-					<input value="{{nueva_cita.tel_cel}}" required="required" type="text" name="tel_cel" placeholder="Teléfono alterno" class="importantes">
+					<p>Teléfono alterno</p>
+					<input value="{{nueva_cita.tel_cel}}" required="required" type="text" name="tel_cel" class="importantes">
 				</div>
 				<div>
-					<input value="{{nueva_cita.contrasena}}" required="required" type="text" placeholder="Contraseña" name="contrasena" class="importantes">
+					<p>Contraseña</p>
+					<input value="{{nueva_cita.contrasena}}" required="required" type="text"name="contrasena" class="importantes">
 				</div>
 				<div>
-					<input value="{{nueva_cita.fecha_hora_llamada|date:'Y-m-d H:i'}}" required="required" type="text" placeholder="Fecha y hora de llamada" name="fecha_hora_llamada" id="fecha_hora_llamada">
+					<p>Fecha y hora de llamada</p>
+					<input value="{{nueva_cita.fecha_hora_llamada|date:'Y-m-d H:i'}}" required="required" type="text" name="fecha_hora_llamada" id="fecha_hora_llamada">
 				</div>
 				<div>
-					<input value="{{nueva_cita.fecha_hora_visita|date:'Y-m-d H:i'}}" required="required" type="text" placeholder="Fecha y hora de visita"class="importantes" name="fecha_hora_visita" id="fecha_hora_visita">
+					<p>Fecha y hora de visita</p>
+					<input value="{{nueva_cita.fecha_hora_visita|date:'Y-m-d H:i'}}" required="required" type="text" class="importantes" name="fecha_hora_visita" id="fecha_hora_visita">
 				</div>
 				<div>
-					<input value="{{nueva_cita.prospecto}}" required="required" type="text" placeholder="Prospecto" class="importantes" name="prospecto">
+					<p>Prospecto</p>
+					<input value="{{nueva_cita.prospecto}}" required="required" type="text" class="importantes" name="prospecto">
 				</div>
 				<div>
-					<input value="{{nueva_cita.edad}}" required="required" type="number" placeholder="Edad" name="edad">
+					<p>Edad</p>
+					<input value="{{nueva_cita.edad}}" required="required" type="number"  name="edad">
 				</div>
 				<div>
-					<input value="{{nueva_cita.nombre_autoriza}}" required="required" type="text" placeholder="Autorizó" class="importantes" name="nombre_autoriza">
+					<p>Autorizó</p>
+					<input value="{{nueva_cita.nombre_autoriza}}" required="required" type="text" class="importantes" name="nombre_autoriza">
 				</div>
 				<div>
-					<input value="{{nueva_cita.parentesco_autoriza}}" required="required" type="text" placeholder="Parentesco" name="parentesco_autoriza">
+					<p>Parentesco</p>
+					<input value="{{nueva_cita.parentesco_autoriza}}" required="required" type="text" name="parentesco_autoriza">
 				</div>
 				<div>
-					<input value="{{nueva_cita.nom_depende}}" required="required" type="text" name="nom_depende" placeholder="¿De quién depende económicamente?:" class="importantes">
+					<p>¿De quién depende económicamente?:</p>
+					<input value="{{nueva_cita.nom_depende}}" required="required" type="text" name="nom_depende">
 				</div>
 				<div>
-					<input value="{{nueva_cita.ocupacion}}" required="required" type="text" placeholder="Ocupación" name="ocupacion">
+					<p>Ocupación</p>
+					<input value="{{nueva_cita.ocupacion}}" required="required" type="text" name="ocupacion">
 				</div>
 				<div class="direccion">
-
 					<label for="">Privada</label>
 					<input  required {%if nueva_cita.tipo_calle == "Privada" %}checked{%endif%} type="radio" name="direccion" value="Privada">
 					<label for="">Callejón</label>
@@ -155,16 +238,21 @@
 					<label for="">Avenida</label>
 					<input  required type="radio" {%if nueva_cita.tipo_calle == "Avenida" %}checked{%endif%}  name="direccion" value="Avenida">
 					<label for="">Calle</label>
-					<input  required type="radio"  {%if nueva_cita.tipo_calle == "Calle" %}checked{%endif%} name="direccion" value="Calle">
-					<input value="{{nueva_cita.calle}}" required type="text" placeholder="Dirección" name="calle">
+					<input  required type="radio"  {%if nueva_cita.tipo_calle == "Calle" %}checked{%endif%} name="direccion" value="Calle"> <br>
+					<p>Dirección</p>
+					<input value="{{nueva_cita.calle}}" required type="text" name="calle">
 				</div>
 				<div class="direccion">
-					<input value="{{nueva_cita.num_exterior}}" required="required" type="text" placeholder="No.Exterior" class="input_chicos" name="num_exterior">
-					<input value="{{nueva_cita.num_visible|booleano}}" required="required" type="text" placeholder="Visible" class="input_chicos" name="num_visible">
-					<input value="{{nueva_cita.num_interior}}" required="required" type="text" placeholder="No.Interior" class="input_chicos" name="num_interior">
+					<label for="">No.Exterior</label>
+					<input value="{{nueva_cita.num_exterior}}" required="required" type="text" class="input_chicos" name="num_exterior">
+					<label for="">Visible</label>
+					<input value="{{nueva_cita.num_visible|booleano}}" required="required" type="text" class="input_chicos" name="num_visible">
+					<label for="">No.Interior</label>
+					<input value="{{nueva_cita.num_interior}}" required="required" type="text" class="input_chicos" name="num_interior">
 				</div>
 				<div>
-					<input value="{{nueva_cita.fachada_color}}" required="required" type="text" placeholder="Fachada color" class="importantes" name="fachada_color">
+					<p>Fachada color</p>
+					<input value="{{nueva_cita.fachada_color}}" required="required" type="text" class="importantes" name="fachada_color">
 				</div>
 				<div class="direccion">
 					<label for="">Puerta</label>
@@ -173,13 +261,16 @@
 					<input  required="required" {%if nueva_cita.tipo_entrada == "Portón"%}checked{%endif%} type="radio" name="tipo_puerta" value="Portón">
 					<label for="">Zaguán</label>
 					<input  required="required" type="radio" name="tipo_puerta" value="Zaguán" {%if nueva_cita.tipo_entrada == "Zaguán"%}checked{%endif%}>
-					<input value="{{nueva_cita.entrada_color}}" required="required" type="text" placeholder="Color" name="entrada_color">
+					<label>Color</label>
+					<input value="{{nueva_cita.entrada_color}}" required="required" type="text" name="entrada_color" class="input_color">
 				</div>
 				<div>
-					<input value="{{nueva_cita.entre_calle1}}" required="required" type="text" placeholder="Entre" name="entre_calle1">
+					<p>Entre</p>
+					<input value="{{nueva_cita.entre_calle1}}" required="required" type="text" name="entre_calle1">
 				</div>
 				<div>
-					<input value="{{nueva_cita.entre_calle2}}" required="required" type="text" placeholder="y" name="entre_calle2">
+					<p>y</p>
+					<input value="{{nueva_cita.entre_calle2}}" required="required" type="text" name="entre_calle2">
 				</div>
 				<div class="direccion">
 					<label for="">Fraccionamiento</label>
@@ -192,48 +283,63 @@
 					<input required="required" type="radio" {% if nueva_cita.tipo_habitacional == "Colonia"%}checked{%endif%} name="tipo_vecindario" value="Colonia">
 				</div>
 				<div class="direccion">
-					<input value="{{nueva_cita.municipio}}" required="required" type="text" placeholder="Delegación/Municipio" class="input_mediano" name="municipio">
-					<input value="{{nueva_cita.cp}}" required="required" type="text" placeholder="C.P" class="input_chicos" name="cp" id="cp">
-					<button onclick="crear_mapas();">Buscar</button>
+					<p for="">Delegación/ <br> Municipio</p>
+					<input value="{{nueva_cita.municipio}}" required="required" type="text" class="input_medianos" name="municipio">
+					<label for="">C.P</label>
+					<input value="{{nueva_cita.cp}}" required="required" type="text" class="input_chicos" name="cp" id="cp">
+					<button onclick="crear_mapas();" class="buscar_btn">Buscar</button>
 				</div>
 				<div>
-					<input value="{{nueva_cita.ultimo_grado}}" required="required" type="text" placeholder="Último grado de estudios" name="ultimo_grado">
+					<p>Último grado de estudios</p>
+					<input value="{{nueva_cita.ultimo_grado}}" required="required" type="text" name="ultimo_grado">
 				</div>
 				<div>
-					<input value="{{nueva_cita.estudia_actualmente|booleano}}" required="required" type="text" placeholder="¿Estudia actualmente S/N?" name="estudia_actualmente">
+					<p>¿Estudia actualmente S/N?</p>
+					<input value="{{nueva_cita.estudia_actualmente|booleano}}" required="required" type="text" name="estudia_actualmente">
 				</div>
 				<div>
-					<input value="{{nueva_cita.otras_actividades}}" required="required" type="text" placeholder="Otras actividades" class="importantes" name="otras_actividades">
+					<p>Otras actividades</p>
+					<input value="{{nueva_cita.otras_actividades}}" required="required" type="text" class="importantes" name="otras_actividades">
 				</div>
 				<div>
-					<input value="{{nueva_cita.dias_horario_oa}}" required="required" type="text" placeholder="Días y horario" name="dias_horario_oa">
+					<p>Días y horario</p>
+					<input value="{{nueva_cita.dias_horario_oa}}" required="required" type="text" name="dias_horario_oa">
 				</div>
 				<div>
-					<input value="{{nueva_cita.interes_autorizo}}" required="required" type="text" placeholder="¿Qué le interesó al que autorizó (además de la beca)?" name="interes_autorizo">
+					<p>¿Qué le interesó al que autorizó (además de la beca)?</p>
+					<input value="{{nueva_cita.interes_autorizo}}" required="required" type="text" name="interes_autorizo">
 				</div>
 				<div>
-					<input value="{{nueva_cita.que_si_no_aprovecha}}" required="required" type="text" placeholder="¿Qué hará si no aprovecha la oportunidad/no ingresa/reprueba?" name="que_si_no_aprovecha">
+					<p>¿Qué hará si no aprovecha la oportunidad/no ingresa/reprueba?</p>
+					<input value="{{nueva_cita.que_si_no_aprovecha}}" required="required" type="text" name="que_si_no_aprovecha">
 				</div>
 				<div>
-					<input value="{{nueva_cita.que_convencera}}" required="required" type="text" placeholder="¿Qué le convencerá para inscribirse (además de la beca)?" class="importantes" name="que_convencera">
+					<p>¿Qué le convencerá para inscribirse (además de la beca)?</p>
+					<input value="{{nueva_cita.que_convencera}}" required="required" type="text" class="importantes" name="que_convencera">
 				</div>
 				<div>
-					<input value="{{nueva_cita.calle_paralela}}" required="required" type="text" placeholder="Vialidad posterior (paralela)" class="importantes" name="calle_paralela">
+					<p>Vialidad posterior (paralela)</p>
+					<input value="{{nueva_cita.calle_paralela}}" required="required" type="text" class="importantes" name="calle_paralela">
 				</div>
 				<div>
-					<input value="{{nueva_cita.vive_frente_a}}" required="required" type="text" placeholder="Ubicado frente a" name="vive_frente_a">
+					<p>Ubicado frente a</p>
+					<input value="{{nueva_cita.vive_frente_a}}" required="required" type="text" name="vive_frente_a">
 				</div>
 				<div>
-					<input value="{{nueva_cita.vive_alado}}" required="required" type="text" placeholder="Al lado de" name="vive_alado">
+					<p>Al lado de</p>
+					<input value="{{nueva_cita.vive_alado}}" required="required" type="text" name="vive_alado">
 				</div>
 				<div>
-					<input value="{{nueva_cita.vive_cerca_de}}" required="required" type="text" placeholder="Cerca de" name="vive_cerca_de">
+					<p>Cerca de</p>
+					<input value="{{nueva_cita.vive_cerca_de}}" required="required" type="text" name="vive_cerca_de">
 				</div>
 				<div>
-					<input value="{{nueva_cita.en_esquina_de}}" required="required" type="text" placeholder="En la esquina hay" name="en_esquina_de">
+					<p>En la esquina hay</p>
+					<input value="{{nueva_cita.en_esquina_de}}" required="required" type="text" name="en_esquina_de">
 				</div>
 				<div>
-					<input value="{{nueva_cita.info_extra}}" required="required" type="text" placeholder="Información extra" class="importantes" name="info_extra">
+					<p>Información extra</p>
+					<input value="{{nueva_cita.info_extra}}" required="required" type="text"class="importantes" name="info_extra">
 				</div>
 				<div class="direccion">
 					<label class="label_grande" for="">El último destino para llegar a su domicilio es:</label><br>
@@ -245,52 +351,68 @@
 					<input required="required" type="radio" name="tipo_transporte" value="Metrobus" {%if nueva_cita.ultimo_destino == "Metrobus"%}checked{%endif%}>
 				</div>
 				<div>
-					<input value="{{nueva_cita.estacion_parada}}" required="required" type="text" placeholder="Estación/Parada" name="estacion_parada">
+					<p>Estación/Parada</p>
+					<input value="{{nueva_cita.estacion_parada}}" required="required" type="text" name="estacion_parada">
 				</div>
 				<div>
-					<input value="{{nueva_cita.direccion_a}}" required="required" type="text" placeholder="Con dirección a" name="direccion_a">
+					<p>Con dirección a</p>
+					<input value="{{nueva_cita.direccion_a}}" required="required" type="text" name="direccion_a">
 				</div>
 				<div>
-					<input value="{{nueva_cita.referencia_bajada}}" required="required" type="text" placeholder="Referencia para bajarse" name="referencia_bajada">
+					<p>Referencia para bajarse</p>
+					<input value="{{nueva_cita.referencia_bajada}}" required="required" type="text" name="referencia_bajada">
 				</div>
 				<div class="direccion">
 					<label class="label_grande" for="">Para llegar se requiere pagar (indicar cuántos):</label><br>
-					<input value="{{nueva_cita.num_metros}}" required="required" type="number" placeholder="metro(s)" class="input_chicos" name="num_metros">
-					<input value="{{nueva_cita.num_camiones}}" required="required" type="number" placeholder="Camión(es)" class="input_chicos" name="num_camiones">
-					<input value="{{nueva_cita.num_metrobuses}}" required="required" type="number" placeholder="Metrobus(es)" class="input_chicos" name="num_metrobuses">
+					<label for="">metro(s)</label>
+					<input value="{{nueva_cita.num_metros}}" required="required" type="number" class="input_transporte" name="num_metros">
+					<label for="">Camión(es)</label>
+					<input value="{{nueva_cita.num_camiones}}" required="required" type="number" class="input_transporte" name="num_camiones">
+					<label for="">Metrobus(es)</label>
+					<input value="{{nueva_cita.num_metrobuses}}" required="required" type="number"class="input_transporte" name="num_metrobuses">
 				</div>
 				<div>
-					<input value="{{nueva_cita.como_llegar}}" required="required" type="text" placeholder="Describa cómo llegar (desde metro 4 Caminos" class="importantes" name="como_llegar">
+					<p>Describa cómo llegar (desde metro 4 Caminos</p>
+					<input value="{{nueva_cita.como_llegar}}" required="required" type="text" class="importantes" name="como_llegar">
 				</div>
 			</div>
 			<div class="bloque">
 				<div>
-					<input value="{{nueva_cita.filtrada_por}}" required="required" type="text" placeholder="FILTRADA POR" class="importantes" name="filtrada_por">
+					<p>FILTRADA POR</p>
+					<input value="{{nueva_cita.filtrada_por}}" required="required" type="text" class="importantes" name="filtrada_por">
 				</div>
 				<div>
-					<input value="{{nueva_cita.filtro_fecha_llamada|date:'Y-m-d H:i'}}" required="required" type="text" placeholder="Fecha y hora de llamada" name="filtro_fecha_llamada" id="filtro_fecha_llamada">
+					<p>Fecha y hora de llamada</p>
+					<input value="{{nueva_cita.filtro_fecha_llamada|date:'Y-m-d H:i'}}" required="required" type="text" name="filtro_fecha_llamada" id="filtro_fecha_llamada">
 				</div>
 				<div>
-					<input value="{{nueva_cita.filtro_num_exterior}}" required="required" type="text" placeholder="VALIDACIÓN" class="importantes" name="filtro_num_exterior">
+					<p>VALIDACIÓN</p>
+					<input value="{{nueva_cita.filtro_num_exterior}}" required="required" type="text" class="importantes" name="filtro_num_exterior">
 				</div>
 				<div>
-					<input value="{{nueva_cita.filtro_num_exterior}}" required="required" type="text" placeholder="Número exterior" name="filtro_num_exterior">
+					<p>Número exterior</p>
+					<input value="{{nueva_cita.filtro_num_exterior}}" required="required" type="text" name="filtro_num_exterior">
 				</div>
 				<div>
-					<input value="{{nueva_cita.filtro_tel_alterno}}" required="required" type="text" placeholder="Teléfono alterno" name="filtro_tel_alterno">
+					<p>Teléfono alterno</p>
+					<input value="{{nueva_cita.filtro_tel_alterno}}" required="required" type="text" name="filtro_tel_alterno">
 				</div>
 				<div>
-					<input value="{{nueva_cita.filtro_observaciones}}" required="required" type="text" placeholder="Observaciones del filtro" name="filtro_observaciones">
+					<p>Observaciones del filtro</p>
+					<input value="{{nueva_cita.filtro_observaciones}}" required="required" type="text" name="filtro_observaciones">
 				</div>
 				<div>
-					<input value="{{nueva_cita.referencia_correcta|booleano}}" required="required" type="text" placeholder="VALIDACIÓN DEL ASESOR: Referencias correctas (S/N)" class="importantes" name="referencia_correcta">
+					<p>VALIDACIÓN DEL ASESOR: Referencias correctas (S/N)</p>
+					<input value="{{nueva_cita.referencia_correcta|booleano}}" required="required" type="text" class="importantes" name="referencia_correcta">
 				</div>
 				<div>
-					<input value="{{nueva_cita.cod_resultado}}" required="required" type="text" placeholder="Código de Resultado" class="importantes" name="cod_resultado">
+					<p>Código de Resultado</p>
+					<input value="{{nueva_cita.cod_resultado}}" required="required" type="text" class="importantes" name="cod_resultado">
 				</div>
 				<div>
 				</div>
-				<textarea value="{{nueva_cita.observaciones}}" id="" cols="30" rows="10" placeholder="Observaciones" class="importantes" name="observaciones">{{nueva_cita.observaciones}}</textarea>
+				<label>Observaciones</label>
+				<textarea value="{{nueva_cita.observaciones}}" id="" cols="30" rows="10" class="importantes" name="observaciones">{{nueva_cita.observaciones}}</textarea>
 			</div>
 			<input type="submit" value="Enviar">
 		</form>
