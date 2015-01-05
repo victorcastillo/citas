@@ -20,7 +20,7 @@ jQuery(document).ready(function($) {
 			type: 'POST',
 			success: function(data){
 				$.fancybox(data);
-				window.location.path = "/citas/buscador/";
+				window.location.path = "/citas/";
 			}
 		});
 	});

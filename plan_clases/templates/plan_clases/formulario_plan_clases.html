@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<style>
+	body{
+		margin: 0px 0px 30px;
+	}
+	.citas_form{
+		width: 900px;
+		margin: 0 auto;
+		padding: 10px 20px;
+		box-shadow: 2px 2px 2px #ddd;
+		border:1px solid #ccc;
+		border-top: 5px solid #090;
+	}
+	label, input, select{
+		display: block;
+		margin: 5px 0px;
+		font-family: Helvetica;
+		font-size: 12px;
+		color: #666;
+		width: 96%;
+		padding: 2px 2px 2px 10px;
+	}
+	input, select, textarea{
+		border:1px solid #ccc;
+		height: 20px;
+	}
+	textarea{
+		height: 60px;
+		width: 95%;
+		margin-left: 13px;
+		padding: 5px 5px 5px 10px;
+		font-family: Helvetica;
+		font-size: 12px;
+	}
+	.direccion{
+		width: calc(92%/2);
+		display: inline-block;
+	}
+	.direccion label, .direccion input[type=radio]{
+		width: auto;
+		display: inline-block;
+	}
+	h1{
+		font-family: helvetica;
+		font-size: 20px;
+		text-align: center;
+		color: #090;
+	}
+	.bloque{
+		text-align: left;
+		background: #fafafa;
+		border: 1px solid #ccc;
+		border-radius: 5px;
+		padding: 10px 5px;
+		margin: 0px 0px 15px;
+		box-shadow: 2px 2px 2px #ddd;
+	}
+	.bloque div{
+		width: calc(92%/2);
+		display: inline-block;
+		margin: 0px 13px;
+	}
+	.label_grande{
+		font-weight: bold;
+		color: #090;
+	}
+	.importantes::-webkit-input-placeholder{
+		color:#090;
+	}
+	.input_chicos{
+		width: calc(87%/3);
+		display: inline-block;
+	}
+	.input_mediano{
+		width: calc(87%/1.4);
+		display: inline-block;
+	}
+	.alinear_derecha{
+		text-align: right;
+	}
+	.lista_plan_clases{
+		width: 93%;
+		font-family: Helvetica;
+		font-size: 12px;
+		color: #666;
+	}
+	.lista_plan_clases li{
+		list-style: decimal;
+		padding: 0px;
+	}
+	.bloque h3{
+		font-family: Helvetica;
+		font-size: 16px;
+		color: #666;
+		padding-left: 20px;
+		width: 45%;
+		display: inline-block;
+	}
+	.nota_plan_clase{
+		font-family: Helvetica;
+		font-size: 11px !important;
+		color: #666;
+		padding-left: 20px;
+	}
+	.vertical_titulo{  
+		transform: rotate(-90deg);
+		font-family: Helvetica;
+		font-size: 14px;
+		color: #666;
+		text-align: left;
+		width: 60px !important;
+}
+	.bloque table td{
+		font-family: Helvetica;
+		font-size: 12px;
+		color: #666;
+		padding-left: 20px;
+	}
+	.tabla_plan_clase input[type="radio"]{
+		width: auto;
+		display: block;
+		margin: 0 auto;
+	}
+	.border_lista{
+		border: none;
+		background: none;
+		width: 97%;
+		display: inline-block;
+		border-bottom: 1px solid #ddd;
+	}
+	.border_lista_table{
+		border: none;
+		background: none;
+		width: 90%;
+		display: inline-block;
+		border-bottom: 1px solid #ddd;
+	}
+
+	</style>
+	<link rel="stylesheet" href="{{STATIC_URL}}fancybox/source/jquery.fancybox.css">
+</head>
+<body>
+	<div class="citas_form">
+		<h1>PLAN DE CLASES</h1>
+		<form action="" id="formulario_plan_clases">
+			{%csrf_token%}
+			<div class="bloque">
+			<div>
+			<input required type="text" name ="materia" value="{{plan.materia}}" placeholder="Materia" class="importantes">
+			</div>
+			<div>
+			<input required type="text" name ="curso" value="{{plan.curso}}"  placeholder="Curso">
+			</div>
+			<div>
+				<label for=""  class="input_mediano">Fecha de clases</label>
+				<label for="" class="input_chicos">Fecha de clases</label>
+			<input required name ="fecha_de_clases" value="{{plan.fecha_de_clases|date:'Y-m-d'}}"  type="date" class="input_mediano">
+			<input required name ="hora_de_clases" value="{{plan.hora_de_clases|date: 'H:i'}}" type="time" class="input_chicos">
+			</div>
+			<div>
+			<input required  name ="profesor" value="{{plan.profesor}}" type="text" placeholder="Profesor" class="importantes">
+			</div>
+			<div>
+			<input required type="number" class="input_chicos" placeholder="No. de clase"  name ="no_de_clase" value="{{plan.no_de_clase}}">
+			</div>
+			<div class="alinear_derecha">
+			<input required type="text"  name ="horas_de_clases" value="{{plan.horas_de_clases}}" class="input_chicos" placeholder="Horas de clases">
+			</div>
+			</div>
+			<div class="bloque">
+				<h3>APRENDIZAJE ESPERADO</h3>
+				<ul class="lista_plan_clases">
+					<li><input required type="text"  name ="aprendizaje_esperado_1" value="{{plan.aprendizaje_esperado_1}}" class="border_lista" placeholder="Dato"></li>
+					<li><input required type="text" name ="aprendizaje_esperado_2" value="{{plan.aprendizaje_esperado_2}}" class="border_lista" placeholder="Dato"></li>
+				</ul>
+			</div>
+			<div class="bloque">
+				<h3>HABILIDADES / COMPETENCIAS A DESARROLLAR</h3>
+				<ul class="lista_plan_clases">
+					<li><input name ="habilidades_a_desarrollar_1" value="{{plan.habilidades_a_desarrollar_1}}" required type="text" class="border_lista" placeholder="Dato"></li>
+					<li><input name ="habilidades_a_desarrollar_2" value="{{plan.habilidades_a_desarrollar_2}}" required type="text" class="border_lista" placeholder="Dato"></li>
+					<li><input name ="habilidades_a_desarrollar_3" value="{{plan.habilidades_a_desarrollar_3}}" required type="text" class="border_lista" placeholder="Dato"></li>
+				</ul>
+			</div>
+			<div class="bloque">
+				<h3> TEMAS A DESARROLLAR</h3>
+				<ul class="lista_plan_clases">
+					<li><input name ="temas_a_desarrollar_1" value="{{plan.temas_a_desarrollar_1}}" required type="text" class="border_lista" placeholder="Dato"></li>
+					<li><input name ="temas_a_desarrollar_2" value="{{plan.temas_a_desarrollar_2}}" required type="text" class="border_lista" placeholder="Dato"></li>
+					<li><input name ="temas_a_desarrollar_3" value="{{plan.temas_a_desarrollar_3}}" required type="text" class="border_lista" placeholder="Dato"></li>
+					<li><input name ="temas_a_desarrollar_4" value="{{plan.temas_a_desarrollar_4}}" required type="text" class="border_lista" placeholder="Dato"></li>
+					<li><input name ="temas_a_desarrollar_5" value="{{plan.temas_a_desarrollar_5}}" required type="text" class="border_lista" placeholder="Dato"></li>
+				</ul>
+			</div>
+				<div class="bloque">
+				<h3> EVIDENCIAS DE APRENDIZAJE</h3>
+				<ul class="lista_plan_clases">
+					<li><input name ="evidencias_de_aprendizaje_1" value="{{plan.evidencias_de_aprendizaje_1}}" required type="text" class="border_lista" placeholder="Dato"></li>
+					<li><input name ="evidencias_de_aprendizaje_2" value="{{plan.evidencias_de_aprendizaje_2}}" required type="text" class="border_lista" placeholder="Dato"></li>
+					<li><input name ="evidencias_de_aprendizaje_3" value="{{plan.evidencias_de_aprendizaje_3}}" required type="text" class="border_lista" placeholder="Dato"></li>
+					<li><input name ="evidencias_de_aprendizaje_4" value="{{plan.evidencias_de_aprendizaje_4}}" required type="text" class="border_lista" placeholder="Dato"></li>
+				</ul>
+			</div>
+			<div class="bloque">
+				<h3>RECURSOS / OBJETOS DE APRENDIZAJE</h3>
+				<h3 class="alinear_derecha">SU USO PEDAGÓGICO</h3>
+				<table class="tabla_plan_clase">
+					<tr>
+					<td class="nota_plan_clase"><p><b>Objetos de instrucción:</b> artículos, talleres, seminarios, videos, casos de estudios, etc.</p>
+					<p><b>Objetos de colaboración:</b> foros, Chat, elluminate/Collaborate, reuniones on-line, etc.</p>
+					<p><b>Objetos de prácticas:</b> simulaciones, softwares, laboratorios on-line, proyectos de investigación, dinámicas en clase, etc.</p>
+					<p><b>Objetos de evaluación:</b> evaluación parcial, final, rápida, de simulación, certificación, etc.</p></td>
+						<td class="vertical_titulo">Evaluación</td>
+						<td class="vertical_titulo">Instrucción</td>
+						<td class="vertical_titulo">Colaboración</td>
+						<td class="vertical_titulo">Prácticas</td>
+						<td class="vertical_titulo">Nivel (1-4)</td>
+					</tr>
+					<tr>
+						<td>1.<input name ="recursos_de_aprendizaje_1" value="{{plan.recursos_de_aprendizaje_1}}" required type="text" class="border_lista_table" placeholder="Dato"></td>
+						<td><input {%if plan.uso_pedagogico_1 == "Evaluación"%}checked{%endif%} name ="uso_pedagogico_1" value="Evaluación" required type="radio" ></td>
+						<td><input {%if plan.uso_pedagogico_2 == "Instrucción"%}checked{%endif%} name ="uso_pedagogico_1" value="Instrucción" required type="radio" ></td>
+						<td><input {%if plan.uso_pedagogico_3 == "Colaboración"%}checked{%endif%} name ="uso_pedagogico_1" value="Colaboración" required type="radio" ></td>
+						<td><input {%if plan.uso_pedagogico_4 == "Prácticas"%}checked{%endif%} name ="uso_pedagogico_1" value="Prácticas" required type="radio" ></td>
+						<td><input name ="nivel_1" value="{{plan.nivel_1}}" required type="number" min="1" max="4" class="border_lista_table" placeholder="Dato"></td>
+					</tr>
+					<tr>
+						<td>2.<input name ="recursos_de_aprendizaje_2" value="{{plan.recursos_de_aprendizaje_2}}" required type="text" class="border_lista_table" placeholder="Dato"></td>
+						<td><input {%if plan.uso_pedagogico_1 == "Evaluación"%}checked{%endif%} name ="uso_pedagogico_2" value="Evaluación" required type="radio" ></td>
+						<td><input {%if plan.uso_pedagogico_2 == "Instrucción"%}checked{%endif%} name ="uso_pedagogico_2" value="Instrucción" required type="radio" ></td>
+						<td><input  {%if plan.uso_pedagogico_3 == "Colaboración"%}checked{%endif%}name ="uso_pedagogico_2" value="Colaboración" required type="radio" ></td>
+						<td><input {%if plan.uso_pedagogico_4 == "Prácticas"%}checked{%endif%} name ="uso_pedagogico_2" value="Prácticas" required type="radio" ></td>
+						<td><input name ="nivel_2" value="{{plan.nivel_2}}" required type="number" min="1" max="4" class="border_lista_table" placeholder="Dato"></td>
+					</tr>
+					<tr>
+						<td>3.<input name ="recursos_de_aprendizaje_3" value="{{plan.recursos_de_aprendizaje_3}}" required type="text" class="border_lista_table" placeholder="Dato"></td>
+						<td><input {%if plan.uso_pedagogico_1 == "Evaluación"%}checked{%endif%} name ="uso_pedagogico_3" value="Evaluación" required type="radio" ></td>
+						<td><input {%if plan.uso_pedagogico_2 == "Instrucción"%}checked{%endif%} name ="uso_pedagogico_3" value="Instrucción" required type="radio" ></td>
+						<td><input  {%if plan.uso_pedagogico_3 == "Colaboración"%}checked{%endif%}name ="uso_pedagogico_3" value="Colaboración" required type="radio" ></td>
+						<td><input {%if plan.uso_pedagogico_4 == "Prácticas"%}checked{%endif%} name ="uso_pedagogico_3" value="Prácticas" required type="radio" ></td>
+						<td><input name ="nivel_3" value="{{plan.nivel_3}}" required type="number" min="1" max="4" class="border_lista_table" placeholder="Dato"></td>
+					</tr>
+					<tr>
+						<td>4.<input name ="recursos_de_aprendizaje_4" value="{{plan.recursos_de_aprendizaje_4}}" required type="text" class="border_lista_table" placeholder="Dato"></td>
+						<td><input {%if plan.uso_pedagogico_1 == "Evaluación"%}checked{%endif%} name ="uso_pedagogico_4" value="Evaluación" required type="radio" ></td>
+						<td><input {%if plan.uso_pedagogico_2 == "Instrucción"%}checked{%endif%} name ="uso_pedagogico_4" value="Instrucción" required type="radio" ></td>
+						<td><input  {%if plan.uso_pedagogico_3 == "Colaboración"%}checked{%endif%}name ="uso_pedagogico_4" value="Colaboración" required type="radio" ></td>
+						<td><input {%if plan.uso_pedagogico_4 == "Prácticas"%}checked{%endif%} name ="uso_pedagogico_4" value="Prácticas" required type="radio" ></td>
+						<td><input name ="nivel_4" value="{{plan.nivel_4}}" required type="number" min="1" max="4" class="border_lista_table" placeholder="Dato"></td>
+					</tr>
+					<tr>
+						<td>5.<input name ="recursos_de_aprendizaje_5" value="{{plan.recursos_de_aprendizaje_5}}" required type="text" class="border_lista_table" placeholder="Dato"></td>
+						<td><input {%if plan.uso_pedagogico_1 == "Evaluación"%}checked{%endif%} name ="uso_pedagogico_5" value="Evaluación" required type="radio" ></td>
+						<td><input {%if plan.uso_pedagogico_2 == "Instrucción"%}checked{%endif%} name ="uso_pedagogico_5" value="Instrucción" required type="radio" ></td>
+						<td><input  {%if plan.uso_pedagogico_3 == "Colaboración"%}checked{%endif%}name ="uso_pedagogico_5" value="Colaboración" required type="radio" ></td>
+						<td><input {%if plan.uso_pedagogico_4 == "Prácticas"%}checked{%endif%} name ="uso_pedagogico_5" value="Prácticas" required type="radio" ></td>
+						<td><input name ="nivel_5" value="{{plan.nivel_5}}" required type="number" min="1" max="4" class="border_lista_table" placeholder="Dato"></td>
+					</tr>
+				</table>
+			</div>
+			<div class="bloque">
+				<textarea name ="observaciones" value="{{plan.observaciones}}" required id="" cols="30" rows="10" placeholder="OBSERVACIONES" ></textarea>
+			</div>
+			</div>
+			<input type="submit" value="Enviar">
+		</form>
+	</div>
+	<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+	<script src="{{STATIC_URL}}fancybox/source/jquery.fancybox.js"></script>
+	<script src="{{STATIC_URL}}js/plan_clases.js"></script>
+</body>
+</html>

@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<style>
+	body{
+		margin: 0px 0px 30px;
+	}
+	.citas_form{
+		width: 900px;
+		margin: 0 auto;
+		padding: 10px 20px;
+		box-shadow: 2px 2px 2px #ddd;
+		border:1px solid #ccc;
+		border-top: 5px solid #090;
+	}
+	label, input, select{
+		display: block;
+		margin: 5px 0px;
+		font-family: Helvetica;
+		font-size: 12px;
+		color: #666;
+		width: 96%;
+		padding: 2px 2px 2px 10px;
+	}
+	input, select, textarea{
+		border:1px solid #ccc;
+		height: 20px;
+	}
+	textarea{
+		height: 60px;
+		width: 95%;
+		margin-left: 13px;
+		padding: 5px 5px 5px 10px;
+		font-family: Helvetica;
+		font-size: 12px;
+	}
+	.direccion{
+		width: calc(92%/2);
+		display: inline-block;
+	}
+	.direccion label, .direccion input[type=radio]{
+		width: auto;
+		display: inline-block;
+	}
+	h1{
+		font-family: helvetica;
+		font-size: 20px;
+		text-align: center;
+		color: #090;
+	}
+	.bloque{
+		text-align: left;
+		background: #fafafa;
+		border: 1px solid #ccc;
+		border-radius: 5px;
+		padding: 10px 5px;
+		margin: 0px 0px 15px;
+		box-shadow: 2px 2px 2px #ddd;
+	}
+	.bloque div{
+		width: calc(92%/2);
+		display: inline-block;
+		margin: 0px 13px;
+	}
+	.label_grande{
+		font-weight: bold;
+		color: #090;
+	}
+	.importantes::-webkit-input-placeholder{
+		color:#090;
+	}
+	.input_chicos{
+		width: calc(87%/3);
+		display: inline-block;
+	}
+	.input_mediano{
+		width: calc(87%/1.4);
+		display: inline-block;
+	}
+	.alinear_derecha{
+		text-align: right;
+	}
+	.lista_plan_clases{
+		width: 93%;
+		font-family: Helvetica;
+		font-size: 12px;
+		color: #666;
+	}
+	.lista_plan_clases li{
+		list-style: decimal;
+		border-bottom: 1px solid #ddd;
+		padding: 5px 0px;
+	}
+	.bloque h3{
+		font-family: Helvetica;
+		font-size: 16px;
+		color: #666;
+		padding-left: 20px;
+		width: 45%;
+		display: inline-block;
+	}
+	.nota_plan_clase{
+		font-family: Helvetica;
+		font-size: 11px !important;
+		color: #666;
+		padding-left: 20px;
+	}
+	.vertical_titulo{  
+		transform: rotate(-90deg);
+		font-family: Helvetica;
+		font-size: 14px;
+		color: #666;
+		text-align: left;
+		width: 60px !important;
+}
+	.bloque table td{
+		font-family: Helvetica;
+		font-size: 12px;
+		color: #666;
+		padding-left: 20px;
+	}
+	.tabla_plan_clase input[type="radio"]{
+		width: auto;
+		display: block;
+		margin: 0 auto;
+	}
+	.tabla_lista_asistentes{
+		width: 100%;
+
+	}
+	.firmas_asistencia{
+		width: auto;
+		font-family: Helvetica;
+		font-size: 12px;
+		color: #666;
+	}
+	.firma_direct{
+		width: 40%;
+		vertical-align: bottom;
+		padding:10px auto 20px;
+	}
+	.firma_direct span{
+		width: 80%;
+		display: block;
+		text-align: center;
+		border-top: 1px solid #ddd;
+		padding-top: 5px;
+		margin: 0 auto;
+	}
+	.resultados_lista_asistentes{
+		border:1px solid #fff;
+		border-bottom: 1px dotted #ddd;
+		width: 80px;
+	}
+	.firmas_asistencia td:nth-child(1){
+		padding-right: 10px;
+	}
+	.border_lista_asistentes{
+		border: none;
+		background: none;
+		width: 100%;
+		display: inline-block;
+		border-bottom: 1px solid #ddd;
+		padding:0px;
+	}
+	.firmas_asistencia_no_llenar{
+		width: 100%;
+		font-family: Helvetica;
+		font-size: 12px;
+		color: #666;
+	}
+	.nota_no_llenar{
+		background: #eee;
+		padding: 5px 0px 5px 10px;
+	}
+	</style>
+	<link rel="stylesheet" href="{{STATIC_URL}}fancybox/source/jquery.fancybox.css">
+</head>
+<body>
+	<div class="citas_form">
+		<h1>LISTA DE ASISTENTES</h1>
+		<form action="" id="formulario_lista_asistentes">
+			{%csrf_token%}
+			<div class="bloque">
+			<div>
+				<label for="" class="input_mediano"><b>FECHA DE CLASE:</b></label>
+				<input type="date" class="input_mediano" value="{{lista.fecha_clase|date:'Y-m-d'}}" name="fecha_clase" required>
+			</div>
+			<div>
+				<label for="" class="input_chicos"><b>HORARIO:</b></label>
+				<label for="" class="input_mediano">A:</label>
+				<input type="time" class="input_chicos" value="{{lista.hora_inicio|date:'H:i'}}" required name="hora_inicio">
+				<input type="time" class="input_chicos" value="{{lista.hora_fin|date:'H:i'}}" required name="hora_fin">
+			</div>
+			</div>
+			<div class="bloque">
+				<table class="tabla_lista_asistentes">
+					<tr>
+						<td width="100"><b>MATRíCULA</b></td>
+						<td><b>NOMBRE DEL ALUMNO</b></td>
+						<td width="30"><b>Retardo</b></td>
+						<td><b>ACTITUD (B/R/M)</b></td>
+						<td width="70"><b>CAL (1-10)</b></td>
+					</tr>
+					<tr>
+						<td><input value="{{lista.matricula_1}}" required name="matricula_1" type="text" class="border_lista_asistentes" placeholder="1."></td>
+						<td><input value="{{lista.nombre_alumno_1}}" required name="nombre_alumno_1" type="text" class="border_lista_asistentes" placeholder="Dato"></td>
+						<td><input value="{{lista.retardo_1}}" required name="retardo_1" type="text" class="border_lista_asistentes" placeholder="Dato"></td>
+						<td><input value="{{lista.actitud_1}}" required name="actitud_1" maxlength="1" type="text" class="border_lista_asistentes" placeholder="Dato"></td>
+						<td><input value="{{lista.cal_1}}" required name="cal_1" type="number" max="10" min="1" class="border_lista_asistentes" placeholder="Dato"></td>
+					</tr>
+					<tr>
+						<td><input value="{{lista.matricula_2}}" required name="matricula_2" type="text" class="border_lista_asistentes" placeholder="1."></td>
+						<td><input value="{{lista.nombre_alumno_2}}" required name="nombre_alumno_2" type="text" class="border_lista_asistentes" placeholder="Dato"></td>
+						<td><input value="{{lista.retardo_2}}" required name="retardo_2" type="text" class="border_lista_asistentes" placeholder="Dato"></td>
+						<td><input value="{{lista.actitud_2}}" required name="actitud_2" maxlength="1" type="text" class="border_lista_asistentes" placeholder="Dato"></td>
+						<td><input value="{{lista.cal_2}}" required name="cal_2" type="number" max="10" min="1" class="border_lista_asistentes" placeholder="Dato"></td>
+					</tr>
+					<tr>
+						<td><input value="{{lista.matricula_3}}" required name="matricula_3" type="text" class="border_lista_asistentes" placeholder="1."></td>
+						<td><input value="{{lista.nombre_alumno_3}}" required name="nombre_alumno_3" type="text" class="border_lista_asistentes" placeholder="Dato"></td>
+						<td><input value="{{lista.retardo_3}}" required name="retardo_3" type="text" class="border_lista_asistentes" placeholder="Dato"></td>
+						<td><input value="{{lista.actitud_3}}" required name="actitud_3" maxlength="1" type="text" class="border_lista_asistentes" placeholder="Dato"></td>
+						<td><input value="{{lista.cal_3}}" required name="cal_3" type="number" max="10" min="1" class="border_lista_asistentes" placeholder="Dato"></td>
+					</tr>
+					<tr>
+						<td><input value="{{lista.matricula_4}}" required name="matricula_4" type="text" class="border_lista_asistentes" placeholder="1."></td>
+						<td><input value="{{lista.nombre_alumno_4}}" required name="nombre_alumno_4" type="text" class="border_lista_asistentes" placeholder="Dato"></td>
+						<td><input value="{{lista.retardo_4}}" required name="retardo_4" type="text" class="border_lista_asistentes" placeholder="Dato"></td>
+						<td><input value="{{lista.actitud_4}}" required name="actitud_4" maxlength="1" type="text" class="border_lista_asistentes" placeholder="Dato"></td>
+						<td><input value="{{lista.cal_4}}" required name="cal_4" type="number" max="10" min="1" class="border_lista_asistentes" placeholder="Dato"></td>
+					</tr>
+					<tr>
+						<td><input value="{{lista.matricula_5}}" required name="matricula_5" type="text" class="border_lista_asistentes" placeholder="1."></td>
+						<td><input value="{{lista.nombre_alumno_5}}" required name="nombre_alumno_5" type="text" class="border_lista_asistentes" placeholder="Dato"></td>
+						<td><input value="{{lista.retardo_5}}" required name="retardo_5" type="text" class="border_lista_asistentes" placeholder="Dato"></td>
+						<td><input value="{{lista.actitud_5}}" required name="actitud_5" maxlength="1" type="text" class="border_lista_asistentes" placeholder="Dato"></td>
+						<td><input value="{{lista.cal_5}}" required name="cal_5" type="number" max="10" min="1" class="border_lista_asistentes" placeholder="Dato"></td>
+					</tr>
+					<tr>
+						<td><input value="{{lista.matricula_6}}" required name="matricula_6" type="text" class="border_lista_asistentes" placeholder="1."></td>
+						<td><input value="{{lista.nombre_alumno_6}}" required name="nombre_alumno_6" type="text" class="border_lista_asistentes" placeholder="Dato"></td>
+						<td><input value="{{lista.retardo_6}}" required name="retardo_6" type="text" class="border_lista_asistentes" placeholder="Dato"></td>
+						<td><input value="{{lista.actitud_6}}" required name="actitud_6" maxlength="1" type="text" class="border_lista_asistentes" placeholder="Dato"></td>
+						<td><input value="{{lista.cal_6}}" required name="cal_6" type="number" max="10" min="1" class="border_lista_asistentes" placeholder="Dato"></td>
+					</tr>
+					<tr>
+						<td><input value="{{lista.matricula_7}}" required name="matricula_7" type="text" class="border_lista_asistentes" placeholder="1."></td>
+						<td><input value="{{lista.nombre_alumno_7}}" required name="nombre_alumno_7" type="text" class="border_lista_asistentes" placeholder="Dato"></td>
+						<td><input value="{{lista.retardo_7}}" required name="retardo_7" type="text" class="border_lista_asistentes" placeholder="Dato"></td>
+						<td><input value="{{lista.actitud_7}}" required name="actitud_7" maxlength="1" type="text" class="border_lista_asistentes" placeholder="Dato"></td>
+						<td><input value="{{lista.cal_7}}" required name="cal_7" type="number" max="10" min="1" class="border_lista_asistentes" placeholder="Dato"></td>
+					</tr>
+					<tr>
+						<td><input value="{{lista.matricula_8}}" required name="matricula_8" type="text" class="border_lista_asistentes" placeholder="1."></td>
+						<td><input value="{{lista.nombre_alumno_8}}" required name="nombre_alumno_8" type="text" class="border_lista_asistentes" placeholder="Dato"></td>
+						<td><input value="{{lista.retardo_8}}" required name="retardo_8" type="text" class="border_lista_asistentes" placeholder="Dato"></td>
+						<td><input value="{{lista.actitud_8}}" required name="actitud_8" maxlength="1" type="text" class="border_lista_asistentes" placeholder="Dato"></td>
+						<td><input value="{{lista.cal_8}}" required name="cal_8" type="number" max="10" min="1" class="border_lista_asistentes" placeholder="Dato"></td>
+					</tr>
+					<tr>
+						<td><input value="{{lista.matricula_9}}" required name="matricula_9" type="text" class="border_lista_asistentes" placeholder="1."></td>
+						<td><input value="{{lista.nombre_alumno_9}}" required name="nombre_alumno_9" type="text" class="border_lista_asistentes" placeholder="Dato"></td>
+						<td><input value="{{lista.retardo_9}}" required name="retardo_9" type="text" class="border_lista_asistentes" placeholder="Dato"></td>
+						<td><input value="{{lista.actitud_9}}" required name="actitud_9" maxlength="1" type="text" class="border_lista_asistentes" placeholder="Dato"></td>
+						<td><input value="{{lista.cal_9}}" required name="cal_9" type="number" max="10" min="1" class="border_lista_asistentes" placeholder="Dato"></td>
+					</tr>
+					<tr>
+						<td><input value="{{lista.matricula_10}}" required name="matricula_10" type="text" class="border_lista_asistentes" placeholder="1."></td>
+						<td><input value="{{lista.nombre_alumno_10}}" required name="nombre_alumno_10" type="text" class="border_lista_asistentes" placeholder="Dato"></td>
+						<td><input value="{{lista.retardo_10}}" required name="retardo_10" type="text" class="border_lista_asistentes" placeholder="Dato"></td>
+						<td><input value="{{lista.actitud_10}}" required name="actitud_10" maxlength="1" type="text" class="border_lista_asistentes" placeholder="Dato"></td>
+						<td><input value="{{lista.cal_10}}" required name="cal_10" type="number" max="10" min="1" class="border_lista_asistentes" placeholder="Dato"></td>
+					</tr>
+				</table>
+				</div>
+				<div class="bloque">
+				<table class="tabla_lista_asistentes">
+					<tr>
+						<td colspan="4"><b>INASISTENCIAS</b></td>
+					</tr>
+					<tr>
+						<td>MATRÍCULA</td>
+						<td>NOMBRE DEL ALUMNO</td>
+						<td>AVISÓ (S/N)</td>
+						<td>CAUSA DE INASISTENCIA</td>
+					</tr>
+
+					<tr>
+						<td><input requiered value="{{lista.in_matricula_1}}" name="in_matricula_1" type="text" class="border_lista_asistentes" placeholder="1."></td>
+						<td><input requiered value="{{lista.in_nombre_alumno_1}}" name="in_nombre_alumno_1" type="text" class="border_lista_asistentes" placeholder="Dato"></td>
+						<td><input requiered value="{{lista.in_aviso_1}}" name="in_aviso_1" maxlength="1" type="text" class="border_lista_asistentes" placeholder="Dato"></td>
+						<td><input requiered value="{{lista.in_causa_1}}" name="in_causa_1" type="text" class="border_lista_asistentes" placeholder="Dato"></td>
+					</tr>
+					<tr>
+						<td><input requiered value="{{lista.in_matricula_2}}" name="in_matricula_2" type="text" class="border_lista_asistentes" placeholder="1."></td>
+						<td><input requiered value="{{lista.in_nombre_alumno_2}}" name="in_nombre_alumno_2" type="text" class="border_lista_asistentes" placeholder="Dato"></td>
+						<td><input requiered value="{{lista.in_aviso_2}}" name="in_aviso_2" maxlength="1" type="text" class="border_lista_asistentes" placeholder="Dato"></td>
+						<td><input requiered value="{{lista.in_causa_2}}" name="in_causa_2" type="text" class="border_lista_asistentes" placeholder="Dato"></td>
+					</tr>
+					<tr>
+						<td><input requiered value="{{lista.in_matricula_3}}" name="in_matricula_3" type="text" class="border_lista_asistentes" placeholder="1."></td>
+						<td><input requiered value="{{lista.in_nombre_alumno_3}}" name="in_nombre_alumno_3" type="text" class="border_lista_asistentes" placeholder="Dato"></td>
+						<td><input requiered value="{{lista.in_aviso_3}}" name="in_aviso_3" maxlength="1" type="text" class="border_lista_asistentes" placeholder="Dato"></td>
+						<td><input requiered value="{{lista.in_causa_3}}" name="in_causa_3" type="text" class="border_lista_asistentes" placeholder="Dato"></td>
+					</tr>
+					<tr>
+						<td><input requiered value="{{lista.in_matricula_4}}" name="in_matricula_4" type="text" class="border_lista_asistentes" placeholder="1."></td>
+						<td><input requiered value="{{lista.in_nombre_alumno_4}}" name="in_nombre_alumno_4" type="text" class="border_lista_asistentes" placeholder="Dato"></td>
+						<td><input requiered value="{{lista.in_aviso_4}}" name="in_aviso_4" maxlength="1" type="text" class="border_lista_asistentes" placeholder="Dato"></td>
+						<td><input requiered value="{{lista.in_causa_4}}" name="in_causa_4" type="text" class="border_lista_asistentes" placeholder="Dato"></td>
+					</tr>
+					<tr>
+						<td><input requiered value="{{lista.in_matricula_5}}" name="in_matricula_5" type="text" class="border_lista_asistentes" placeholder="1."></td>
+						<td><input requiered value="{{lista.in_nombre_alumno_5}}" name="in_nombre_alumno_5" type="text" class="border_lista_asistentes" placeholder="Dato"></td>
+						<td><input requiered value="{{lista.in_aviso_5}}" name="in_aviso_5" maxlength="1" type="text" class="border_lista_asistentes" placeholder="Dato"></td>
+						<td><input requiered value="{{lista.in_causa_5}}" name="in_causa_5" type="text" class="border_lista_asistentes" placeholder="Dato"></td>
+					</tr>
+				</table>
+			</div>
+			<div class="bloque">
+				<textarea name="observaciones" value="{{lista.observaciones}}" required  cols="30" rows="10" placeholder="OBSERVACIONES" ></textarea>
+			</div>
+
+			<table class="firmas_asistencia">
+				<tr>
+					<td>A.-#Alumnos que debieron asistir</td>
+					<td width="80"><input type="text" value="{{lista.alumnos_que_debieron_asistir}}" name="alumnos_que_debieron_asistir" required class="border_lista_asistentes" placeholder="Dato"></td>
+				</tr>
+				<tr>
+					<td>B.- #Alumnos que asistieron</td>
+					<td><input type="text" value="{{lista.alumnos_que_asistieron}}" name="alumnos_que_asistieron" required class="border_lista_asistentes" placeholder="Dato"></td>
+				</tr>
+				<tr>
+					<td>% asistencia (B/A)</td>
+					<td><input readonly type="text" value="{{lista.por_ciento_asistencia}}" class="border_lista_asistentes" placeholder="Dato"></td>
+				</tr>
+			</table>
+			<table class="firmas_asistencia_no_llenar">
+				<tr>
+					<td colspan="3" class="nota_no_llenar">CONTROL INTERNO (NO LLENAR)</td>
+				</tr>
+				<tr>
+					<td width="150">NOMBRE CAPTURISTA:</td>
+					<td><input type="text" value="{{lista.nombre_capturista}}" readonly class="border_lista_asistentes" placeholder="Dato"></td>
+					<td rowspan="3" width="200" class="firma_direct"><span>FIRMA DE DIRECTOR</span></td>
+				</tr>
+				<tr>
+					<td width="150">#GRUPO:</td>
+					<td><input type="number" value="{{lista.grupo}}" readonly class="border_lista_asistentes" placeholder="Dato"></td>
+				</tr>
+				<tr>
+					<td width="150">#FOLIO:</td>
+					<td><input type="number" value="{{lista.folio}}" readonly class="border_lista_asistentes" placeholder="Dato"></td>
+				</tr>
+			</table>
+			<input type="submit">
+		</form>
+	</div>
+	<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+	<script src="{{STATIC_URL}}fancybox/source/jquery.fancybox.js"></script>
+	<script src="{{STATIC_URL}}js/lista_asistentes.js"></script>
+</body>
+</html>

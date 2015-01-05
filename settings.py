@@ -129,7 +129,9 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'south',
     'login',
-    'cita'
+    'cita',
+    'plan_clases',
+    'lista_asistentes',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
