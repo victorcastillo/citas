@@ -159,7 +159,7 @@
 				<label for=""  class="input_mediano">Fecha de clases</label>
 				<label for="" class="input_chicos">Fecha de clases</label>
 			<input required name ="fecha_de_clases" value="{{plan.fecha_de_clases|date:'Y-m-d'}}"  type="date" class="input_mediano">
-			<input required name ="hora_de_clases" value="{{plan.hora_de_clases|date: 'H:i'}}" type="time" class="input_chicos">
+			<input required name ="hora_de_clases" value="{{plan.hora_de_clases|date:'H:i'}}" type="time" class="input_chicos">
 			</div>
 			<div>
 			<input required  name ="profesor" value="{{plan.profesor}}" type="text" placeholder="Profesor" class="importantes">
